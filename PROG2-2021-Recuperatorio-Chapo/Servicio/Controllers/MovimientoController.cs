@@ -15,13 +15,14 @@ namespace Servicio.Controllers
     public class MovimientoController : ApiController
     {
         public IPrincipal principal { get; set; }
-        // GET: api/Movimiento
+        
+        //INNECESARIO
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Movimiento/5
+        //INNECESARIO
         public string Get(int id)
         {
             return "value";
@@ -31,18 +32,21 @@ namespace Servicio.Controllers
 
         public IHttpActionResult Post([FromBody]MovimientoRequest value)
         {
+            //ERROR DE DISEÑO, NO DEBERIA ENVIAR PARAMETROS POR SEPARADO
             List<Movimiento> movimiento = Principal.Instancia.Movimiento(value.DniEnvia, value.DniRecibe, value.Descripcion, value.Monto);
             if (movimiento != null)
                 return Content(HttpStatusCode.Created, value);
 
+            //NO DEBERIA RETORNAR LO MISMO QUE SE ENVIO.
             return Content(HttpStatusCode.BadRequest, value);
         }
 
-        // PUT: api/Movimiento/5
+        // INNECESARIO
         public void Put(int id, [FromBody]string value)
         {
         }
 
+        //EL VERBO DEL METODO ES INCORRECTO
         [Route("Movimiento/{DNI}")]
         public IHttpActionResult Delete(int dni)
         {
